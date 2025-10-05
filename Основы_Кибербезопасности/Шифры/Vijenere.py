@@ -16,7 +16,7 @@ def EncryptDecrypt(text, key, operation):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
     cypher = ''
     key_index = 0
-    key_len = len(key)
+    #key_len = len(key)
     
     if operation == 'ш':
         operation = 'encrypt'
@@ -26,30 +26,25 @@ def EncryptDecrypt(text, key, operation):
     for char in text:
         if char in alphabet:
             text_number = alphabet.index(char)
-            key_number = alphabet.index(key[key_index % key_len].lower())
+            key_number = alphabet.index(key[key_index])
             if operation == 'encrypt':
                 cipher_number = (text_number + key_number) % len(alphabet)
             elif operation == 'decrypt':
                 cipher_number = (text_number - key_number) % len(alphabet)
             cypher += alphabet[cipher_number]
             key_index += 1
-        else:
-            cypher += char
     
     return cypher
 
-
-
 key = input('Введите секретный ключ -> ')
 ciphertext = input('Введите текст для шифрования / дешифрирования -> ')
+key = fit_the_key(ciphertext, key).lower()
 operation = input('Укажите необходимо шифрование (ш) или дешифрирование (д) -> ')
 
 if operation == 'ш':
-    operation_description = 'Зашифрованный'
     encrypted_message = EncryptDecrypt(ciphertext, key, operation)
     print(f'Зашифрованное сообщение -> {encrypted_message}') 
 elif operation == 'д':
-    operation_description = 'Расшифрованный'
     decrypted_message = EncryptDecrypt(ciphertext, key, operation)
     print(f'Дешифрированное сообщение -> {decrypted_message}') 
 
